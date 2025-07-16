@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Somali Paul - Data Analyst Portfolio</title>
+    <style>
+        
+/* --- Global Reset & HTML/Body Styles (Consolidated & Corrected) --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Blue to Purple */
+    --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); /* Pink to Red */
+    --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); /* Blue to Cyan (for CTA/glow) */
+
+    /* ADD THESE for your button gradients as they were missing in :root */
+    --gradient-start: #00F2FE; /* Cyan, consistent with accent-gradient end */
+    --gradient-end: #4C52EF; /* Blue-purple, consistent with accent-gradient start */
+
+    --dark-bg: #0a0a0a;
+    --card-bg: rgba(255, 255, 255, 0.1);
+    --text-light: #ffffff;
+    --text-gray: #b0b0b0;
+    --glow-blue: #00f2fe;
+    --glow-purple: #667eea;
+}
+
+html {
+    scroll-behavior: smooth; /* CORRECT: This is in the right place and active */
+    scroll-padding-top: 80px; /* Adjust if your nav height is different */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--dark-bg);
+    color: var(--text-light);
+    line-height: 1.6;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+/* Animated background */
+.bg-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%);
+    animation: bgFloat 20s ease-in-out infinite;
+}
+
+@keyframes bgFloat {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.1) rotate(180deg); }
+}
+
+/* --- Navigation --- */
+nav { /* Assuming your nav tag is used directly, not a class like .navbar */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px; /* ENSURE THIS IS SET & MATCHES scroll-padding-top (or is slightly less) */
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    padding: 1rem 0;
+    transition: all 0.3s ease;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent-gradient);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* --- Hero Section --- */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding-top: 100px; /* Remains good (100px > 70px nav height) */
+    padding-bottom: 80px;
+    box-sizing: border-box;
+}
+
+.hero-content {
+    max-width: 1000px;
+    width: 100%;
+    /* If you have animation: fadeInUp 1s ease-out; for .hero-content, ensure @keyframes fadeInUp is defined */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero .subtitle {
+    font-size: 1.5rem;
+    color: var(--text-gray);
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+.hero-cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    width: 100%;
+    max-width: 900px;
+}
+
+.hero .description {
+    font-size: 1.1rem;
+    color: var(--text-gray);
+    flex-grow: 1;
+    min-width: 250px;
+    margin: 0;
+    line-height: 1.5;
+    text-align: center;
+}
+
+/* --- General Button Styles --- */
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    min-width: 180px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary { /* My Resume button */
+    /* CORRECTED: Using the newly defined --gradient-start and --gradient-end */
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+    color: #fff;
+    border: none;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    opacity: 0.9;
+}
+
+/* --- CTA Button Style (for Let's Connect) --- */
+.cta-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    font-size: 1.2em;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 50px;
+    background: var(--accent-gradient); /* This was already correct */
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    min-width: 180px;
+    text-align: center;
+}
+
+.cta-button:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    opacity: 0.9;
+}
+
+/* --- Sections --- */
+.section {
+    padding: 5rem 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* --- Cards --- */
+.card {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--accent-gradient);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.card:hover::before {
+    transform: scaleX(1);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 40px rgba(0, 242, 254, 0.2);
+}
+
+/* --- Grid layouts --- */
+.grid {
+    display: grid;
+    gap: 2rem;
+}
+
+.grid-2 {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grid-3 {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/* --- Skills section --- */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.skill-item {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.skill-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(0, 242, 254, 0.3);
+}
+
+.skill-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* --- Progress bars --- */
+.progress-bar {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    height: 8px;
+    margin-top: 1rem;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--accent-gradient);
+    border-radius: 10px;
+    transition: width 2s ease;
+}
+
+/* --- Social links --- */
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: var(--card-bg);
+    border-radius: 50%;
+    color: var(--text-light);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 1.5rem;
+}
+
+.social-link:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 20px rgba(0, 242, 254, 0.4);
+}
+
+/* --- Projects Section Enhancements --- */
+.project-image-container {
+    width: 100%;
+    height: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.project-summary, .project-description {
+    font-size: 0.95em;
+    line-height: 1.6;
+    color: var(--text-gray);
+    margin-bottom: 10px;
+}
+
+.project-impact {
+    font-size: 0.9em;
+    line-height: 1.5;
+    color: var(--glow-blue);
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.project-tech-stack {
+    font-size: 0.85em;
+    color: var(--text-gray);
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.project-tech-stack strong {
+    color: var(--text-light);
+}
+
+.project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.project-links .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.project-links .btn-github {
+    background-color: #333;
+    color: #fff;
+}
+
+.project-links .btn-github:hover {
+    background-color: #555;
+    transform: translateY(-2px);
+}
+
+.project-links .btn-live {
+    background: var(--accent-gradient);
+    color: #fff;
+}
+
+.project-links .btn-live:hover {
+    background: var(--primary-gradient);
+    transform: translateY(-2px);
+}
+
+.project-links .btn-report {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.project-links .btn-report:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+.project-links .btn i {
+    font-size: 1.1em;
+}
+
+/* --- Experience Section Styles (Assuming this is for the collapsible items) --- */
+.experience-header {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 15px;
+}
+
+.experience-header h3,
+.experience-header h4 {
+    margin: 0;
+    line-height: 1.2;
+}
+
+.experience-header h3 {
+    flex-grow: 1;
+    color: var(--text-light); /* Changed to text-light for better contrast */
+}
+
+.expand-icon {
+    margin-left: 20px;
+    font-size: 1.2em;
+    color: var(--glow-blue); /* Using glow-blue for consistent accent */
+    transition: transform 0.3s ease;
+}
+
+.experience-item.active .experience-header .expand-icon {
+    transform: rotate(180deg);
+}
+
+.experience-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out, padding-top 0.5s ease-out;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.experience-item.active .experience-details {
+    max-height: 1000px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.experience-details ul,
+.experience-details p,
+.experience-details .project-in-experience {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.experience-details ul {
+    padding-left: 25px;
+}
+
+.experience-details ul li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.experience-details .project-in-experience {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+/* --- Certifications Section Styling (Inspired by Core Skills Cards) --- */
+#certifications {
+    padding: 80px 20px;
+    background-color: var(--dark-bg); /* Use dark-bg for consistency */
+    color: var(--text-light);
+    text-align: center;
+}
+
+#certifications h2 {
+    font-size: 2.8rem;
+    margin-bottom: 50px;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.certification-domain {
+    background-color: var(--card-bg);
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 60px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    text-align: left;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.certification-domain:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+}
+
+.certification-domain h3 {
+    font-size: 2rem;
+    /* Changed to use glow-blue to match other accents */
+    color: var(--glow-blue);
+    margin-bottom: 30px;
+    text-align: center;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.certificates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    justify-content: center;
+}
+
+.certificate-item {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.certificate-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.certificate-item h4 {
+    font-size: 1.3rem;
+    color: var(--text-light); /* Changed to text-light for better contrast */
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.certificate-item .institution {
+    font-size: 0.95rem;
+    color: var(--text-gray);
+    margin-bottom: 15px;
+    flex-grow: 1;
+}
+
+.certificate-item .view-cert-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: var(--accent-gradient);
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 15px;
+}
+
+.certificate-item .view-cert-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    opacity: 0.9;
+}
+
+/* Responsive adjustments for Certification Section */
+@media (max-width: 768px) {
+    #certifications h2 {
+        font-size: 2.2rem;
+        margin-bottom: 40px;
+    }
+    .certification-domain {
+        padding: 30px;
+        margin-bottom: 40px;
+    }
+    .certification-domain h3 {
+        font-size: 1.8rem;
+        margin-bottom: 25px;
+    }
+    .certificates-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .certificate-item {
+        padding: 20px;
+    }
+    .certificate-item h4 {
+        font-size: 1.2rem;
+    }
+    .certificate-item .institution {
+        font-size: 0.9rem;
+    }
+    .certificate-item .view-cert-btn {
+        padding: 8px 18px;
+        font-size: 0.85em;
+    }
+}
+
+/* --- Animations (Keep at the end or grouped) --- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Responsive (General) --- */
+@media (max-width: 768px) {
+    .nav-links {
+        /* If you have a mobile menu/hamburger, this might be handled by JS */
+        /* display: none; */
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero .subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .section {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+/* --- Contact form --- */
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-gray);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 1rem;
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: var(--text-light);
+    font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--glow-blue);
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background: var(--accent-gradient);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 242, 254, 0.4);
+}
+/* Skills Section Styling */
+.skills-section {
+    padding: 80px 20px; /* Adjust padding as needed, ensuring space for nav */
+    text-align: center;
+    background-color: var(--dark-bg); /* Use your dark background variable */
+}
+
+.skills-section h2 {
+    font-size: 2.5em;
+    margin-bottom: 50px;
+    background: var(--accent-gradient); /* Example: Use a gradient for the heading */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 30px; /* Space between cards */
+    max-width: 1200px; /* Max width for the grid */
+    margin: 0 auto; /* Center the grid */
+}
+
+.skill-category-card {
+    background-color: rgba(255, 255, 255, 0.1); /* Darker background for the card */
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: left; /* Align text within the card */
+    transition: transform 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05); /* Subtle border */
+}
+
+.skill-category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.skill-category-card h3 {
+    font-size: 1.6em;
+    color: var(--text-light); /* Or a subtle gradient/color */
+    margin-bottom: 20px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1); /* Separator line */
+    padding-bottom: 10px;
+}
+
+.skill-items-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    gap: 10px; /* Space between individual skill items */
+}
+
+.skill-item {
+    background-color: #1a1a1a; /* Darker background for skill tags */
+    color: #00f2fe; /* Light blue/cyan color for text, matching your theme */
+    padding: 8px 15px;
+    border-radius: 20px; /* More rounded corners */
+    font-size: 0.95em;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    border: 1px solid rgba(0, 242, 254, 0.3); /* Subtle light border */
+}
+
+.skill-item:hover {
+    background-color: #00f2fe; /* Background changes to accent color */
+    color: #1a1a1a; /* Text color changes for contrast */
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0, 242, 254, 0.4); /* Glow effect */
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+    .skills-grid {
+        grid-template-columns: 1fr; /* Single column on smaller screens */
+        padding: 0 15px;
+    }
+
+    .skills-section h2 {
+        font-size: 2em;
+    }
+}
+</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Somali Paul</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Somali Paul</h1>
+            <p class="subtitle">Data Analyst and Machine Learning Engineer</p>
+            <div class="hero-cta-buttons"> <a href="https://drive.google.com/file/d/1b6jMRHlztj6wdXXdccnTxyzc2Qdj6Y95/view?usp=drive_link" target="_blank" class="btn btn-primary">
+                <i class="fas fa-file-alt"></i> My Resume
+            </a>
+            <p class="description">
+                Transforming complex data into actionable insights and building intelligent systems to drive innovation.
+            </p>
+            <a href="#contact" class="cta-button">Let's Connect</a>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2>About Me</h2>
+        <div class="grid grid-2">
+            <div class="card fade-in">
+                <h3>Personal Information</h3>
+                <p><strong>Name:</strong> Somali Paul</p>
+                <p><strong>Location:</strong> Asansol,West Bengal</p>
+                <p><strong>Email:</strong> somali1315@gmail.com</p>
+                <p><strong>Phone:</strong> +91-8116474387</p> <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/somali-paul-s01" target="_blank" style="color: var(--glow-blue); text-decoration: none;">linkedin.com/in/somali-paul-s01</a></p>
+            </div>
+            <div class="card fade-in">
+                <h3>Professional Summary</h3>
+                <p>Computer Science Engineering student with experience in data analysis, machine learning and data visualization. Proficient in Python, SQL, Excel, Power BI and IBM Cognos Analytics. Completed projects involving predictive modeling, dashboard development, data cleaning and statistical analysis. Strong analytical mindset and passion for delivering actionable business insights.</p>
+            </div>
+        </div>
+
+        <section id="skills" class="skills-section">
+    <h2>Skills</h2> <div class="skills-grid">
+        <div class="skill-category-card">
+            <h3>Programming Languages</h3>
+            <div class="skill-items-container">
+                <span class="skill-item">Python</span>
+                <span class="skill-item">Java</span>
+                <span class="skill-item">C</span> <span class="skill-item">R</span>
+                <span class="skill-item">SQL</span>
+            </div>
+        </div>
+
+        <div class="skill-category-card">
+            <h3>Data Analytics and Visualization</h3>
+            <div class="skill-items-container">
+                <span class="skill-item">Beautiful Soup</span>
+                <span class="skill-item">Power BI</span>
+                <span class="skill-item">Excel</span>
+                <span class="skill-item">IBM Cognos Analytics</span>
+                <span class="skill-item">GitHub</span>
+                <span class="skill-item">Rest APIs</span>
+                <span class="skill-item">Tableau</span>
+            </div>
+        </div>
+
+        <div class="skill-category-card">
+            <h3>Machine Learning</h3>
+            <div class="skill-items-container">
+                <span class="skill-item">Scikit-learn</span>
+                
+                <span class="skill-item">Regression Analysis</span>
+                <span class="skill-item">Predictive</span>
+                <span class="skill-item">Deep Learning</span>
+            </div>
+        </div>
+
+        <div class="skill-category-card">
+            <h3>Databases</h3>
+            <div class="skill-items-container">
+                <span class="skill-item">MySQL</span>
+                 </div>
+        </div>
+
+        <div class="skill-category-card">
+            <h3>Core CS Concepts</h3>
+            <div class="skill-items-container">
+                <span class="skill-item">OOP</span>
+                <span class="skill-item">Operating Systems</span>
+                <span class="skill-item">Algorithms</span>
+                <span class="skill-item">Computer Architecture</span>
+            </div>
+        </div>
+
+        <div class="skill-category-card">
+            <h3>Soft Skills</h3>
+            <div class="skill-items-container">
+                <span class="skill-item">Leadership</span>
+                <span class="skill-item">Communication</span>
+                <span class="skill-item">Problem Solving</span>
+                <span class="skill-item">Teamwork</span>
+                <span class="skill-item">Adaptability</span>
+            </div>
+        </div>
+    </div>
+</section>
+    </section>
+
+    <section id="experience" class="section">
+        <h2>Experience</h2>
+        <div class="card fade-in experience-item">
+    <div class="experience-header">
+        <h3>Internship - Zidio Development</h3>
+        <h4>Data Science and Analytics Intern | May 2025 – August 2025</h4>
+        <div class="expand-icon"><i class="fas fa-chevron-down"></i></div>
+    </div>
+
+    <div class="experience-details">
+        <ul>
+            <li>Assisted in data collection, cleaning, and preparation for various analytical projects.</li>
+            <li>Contributed to the development of internal reports focusing on market trends and performance metrics.</li>
+        </ul>
+
+        <div class="project-in-experience">
+            <h5>Key Project: Stock Market Forecasting Dashboard with LSTM, ARIMA, SARIMA and Prophet</h5>
+            <p>
+                <strong>Problem:</strong> Accurate prediction of stock prices is crucial for investment strategies, but traditional methods often lack the precision needed for volatile markets.
+            </p>
+            <p>
+                <strong>Solution:</strong> Designed and deployed advanced time series forecasting models (LSTM, ARIMA, SARIMA, Prophet) to predict TCS stock closing prices. Engineered features such as moving averages, volatility, and return rates to enhance model accuracy.
+            </p>
+            <p>
+                <strong>Impact:</strong> Achieved an average RMSE below ₹10 for price predictions and improved model accuracy by 15% compared to baseline methods. The interactive Power BI dashboard reduced manual analysis time by over 50%.
+            </p>
+            <p class="tech-stack">
+                <strong>Tech Stack:</strong> Python (LSTM, ARIMA, SARIMA, Prophet libraries), Power BI, Pandas, NumPy
+            </p>
+            <div class="project-buttons">
+                <a href="https://github.com/Somali07/Time_Series_Analysis_And_Stock_Market_Forecasting" target="_blank" class="btn btn-primary">
+                    <i class="fab fa-github"></i> GitHub Repo
+                </a>
+            </div>
+            </div>
+    </div>
+</div>
+
+    </section>
+
+    <section id="projects" class="section">
+        <h2>My Projects</h2>
+        <div class="grid grid-2">
+
+            <div class="card fade-in">
+                <div class="project-image-container">
+                    <img src="C:\Users\KIIT0001\Pictures\Screenshots\Screenshot 2025-07-16 222611.png" alt="Fake News Detection Web App Screenshot" class="project-thumbnail">
+                </div>
+                <h3>Fake News Detection Web App</h3>
+                <p class="project-summary">
+                    **Problem:** The proliferation of misinformation makes it difficult for users to discern authentic news.
+                    **Solution:** Developed a text classification model and a real-time web application to identify fake news.
+                </p>
+                <p class="project-description">
+                    – Implemented a text classification model using TF-IDF and Multinomial Naive Bayes to distinguish fake and real news articles.
+                    – Processed and cleaned 44,000+ articles from public datasets (Fak.csv, True.csv) to ensure high-quality inputs.
+                    – Engineered a fully responsive Streamlit web application that delivers real-time predictions on news authenticity with sub-second latency.
+                </p>
+                <p class="project-impact">
+                    **Impact:** Achieved **95.3% F1-score** on test data, with Precision (94.8%) and Recall (95.7%), demonstrating a robust and reliable system for combating misinformation.
+                </p>
+                <div class="project-tech-stack">
+                    <strong>Technologies:</strong> Python, Matplotlib, Seaborn, Streamlit, Pandas, Scikit-learn
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/Somali07/Fake-News-Detection-Web-App-Python-Streamlit-/blob/main/README.md" target="_blank" class="btn cta-button">
+                        <i class="fab fa-github"></i> View Repo
+                    </a>
+                    </div>
+            </div>
+
+            <div class="card fade-in">
+                <div class="project-image-container">
+                    <img src="C:\Users\KIIT0001\Pictures\Screenshots\Screenshot 2025-07-16 222726.png" alt="Instagram Analytics Dashboard Screenshot" class="project-thumbnail">
+                </div>
+                <h3>Instagram Analytics Dashboard</h3>
+                <p class="project-summary">
+                    **Problem:** Businesses and creators need to understand their Instagram performance to optimize content strategy.
+                    **Solution:** Developed an analytics dashboard to visualize engagement trends and audience insights.
+                </p>
+                <p class="project-description">
+                    – Analyzed 5,000+ Instagram posts to identify trends in engagement rate, audience activity, and content strategy effectiveness.
+                    – Cleaned and transformed metrics including likes, followers, and hashtags using Pandas for accurate insights.
+                    – Derived key performance indicators (KPIs) like Average engagement rate (4.7%) and Top hashtag usage frequency (#travel 15%, #food 12%, #fitness 9%).
+                </p>
+                <p class="project-impact">
+                    **Impact:** Automated Power BI dashboard generation, **reducing manual reporting effort by over 60%**, providing immediate access to critical performance metrics.
+                </p>
+                <div class="project-tech-stack">
+                    <strong>Technologies:</strong> Python, Pandas, Power BI, Streamlit
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/Somali07/Instagram-Analytics-Dashboard" target="_blank" class="btn cta-button">
+                        <i class="fab fa-github"></i> View Repo 
+                    </a>
+                    </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="education" class="section">
+        <h2>Education</h2>
+        <div class="card fade-in">
+            <h3>B.Tech in Computer Science Engineering</h3>
+            <p><strong>Kalinga Institute of Industrial Technology, Bhubanswar, Odisha</strong> | 2023 - 2027</p>
+            <p><strong>CGPA:</strong> 9.65/10.0</p>
+            
+        </div>
+        <div class="card fade-in">
+            <h3>Higher Secondary Certicicate</h3>
+            <p><strong>D.A.V Public School, Asansol, West Bengal</strong> | 2021 - 2023</p>
+            <p><strong>Percentage:</strong> 94.2%</p>
+            
+        </div>
+        <div class="card fade-in">
+            <h3>Secondary Certificate</h3>
+            <p><strong>D.A.V Public School, Asansol, West Bengal</strong> | 2010 - 2021</p>
+            <p><strong>Percentage:</strong> 96.5%</p>
+            
+        </div>
+    </section>
+
+    <section id="certifications" class="certifications-section">
+    <div class="container">
+        <h2>My Certifications</h2>
+
+        <div class="certification-domain">
+            <h3>Data Analyst Course Certificates</h3>
+            <div class="certificates-grid">
+                <div class="certificate-item">
+                    <h4>Introduction to Data Analytics</h4>
+                    <p class="institution">Issued by: Coursera</p>
+                    <a href="https://coursera.org/share/57d8b1f41faf14aebf59dd412da0105d" target="_blank" class="view-cert-btn">View Certificate</a>
+                </div>
+                <div class="certificate-item">
+                    <h4>Excel Basics for Data Analysis</h4>
+                    <p class="institution">Issued by: Coursera</p>
+                    <a href="https://coursera.org/share/61788732849cab4142397f49c728530e" target="_blank" class="view-cert-btn">View Certificate</a>
+                </div>
+                <div class="certificate-item">
+                    <h4>Data Visualization and Dashboards with Excel and Cognos</h4>
+                    <p class="institution">Issued by: Coursera</p>
+                    <a href="https://coursera.org/share/9313a9ad87bcf92fd41778c2dc5a5102" target="_blank" class="view-cert-btn">View Certificate</a>
+                </div>
+                <div class="certificate-item">
+                    <h4>Databases and SQL for Data Science with Python</h4>
+                    <p class="institution">Issued by: Coursera</p>
+                    <a href="https://coursera.org/share/befe8931f4a936254f024bb54b24eb56" target="_blank" class="view-cert-btn">View Certificate</a>
+                </div>
+                <div class="certificate-item">
+                    <h4>Python for Data Science AI and Development</h4>
+                    <p class="institution">Issued by: Coursera</p>
+                    <a href="https://coursera.org/share/0cb008383b5bc7ca07643bc30cdbd702" target="_blank" class="view-cert-btn">View Certificate</a>
+                </div>
+                <div class="certificate-item">
+                    <h4>Python project for Data Science</h4>
+                    <p class="institution">Issued by: Coursera</p>
+                    <a href="https://coursera.org/share/bd542a9afc4f1c448bda2df1fa9480a9" target="_blank" class="view-cert-btn">View Certificate</a>
+                </div>
+                <div class="certificate-item">
+                    <h4>Data Analysis with Python</h4>
+                    <p class="institution">Issued by: Coursera</p>
+                    <a href="https://coursera.org/share/4683ba3eac7a164c318a9abacc7598a2" target="_blank" class="view-cert-btn">View Certificate</a>
+                </div>
+                <div class="certificate-item">
+                    <h4>Data Visualization using Python</h4>
+                    <p class="institution">Issued by: Coursera</p>
+                    <a href="https://coursera.org/share/ed0f6efe8771213eeb3d36ab5ad0805b" target="_blank" class="view-cert-btn">View Certificate</a>
+                </div>
+                <div class="certificate-item">
+                    <h4>Generative AI: Enhance your Data Analytics Career</h4>
+                    <p class="institution">Issued by: Coursera</p>
+                    <a href="https://coursera.org/share/66d2102412b58cef4745c186c511e6ae" target="_blank" class="view-cert-btn">View Certificate</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="certification-domain">
+            <h3>Internship Certificates</h3>
+            <div class="certificates-grid">
+                <div class="certificate-item">
+                    <h4>Internship Completion Certificate (Zidio Development)</h4>
+                    <p class="institution">Issued by: Zidio Development</p>
+                    <a href="https://drive.google.com/file/d/1FmVzL_5abHMVqljzO63aLO7uX0Kp40OE/view?usp=sharing" target="_blank" class="view-cert-btn">View Certificate</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="certification-domain">
+            <h3>Graph Camp Certificate</h3>
+            <div class="certificates-grid">
+                <div class="certificate-item">
+                    <h4>Graph Camp Completion Certificate</h4>
+                    <p class="institution">Issued by: Graph Camp</p>
+                    <a href="https://drive.google.com/file/d/1mPI-ZCE7hx06GEy3lCchJCauD9lBc_FD/view?usp=sharing" target="_blank" class="view-cert-btn">View Certificate</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+    </section>
+    <section id="contact" class="section">
+        <h2>Let's Connect</h2>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/somali-paul-s01" class="social-link" target="_blank" aria-label="LinkedIn Profile">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://github.com/Somali07" class="social-link" target="_blank" aria-label="GitHub Profile">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="mailto:somali1315@gmail.com" class="social-link" aria-label="Email Address">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+
+        <div class="contact-form fade-in">
+            <form>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Animate progress bars when they come into view
+        const progressObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressFills = entry.target.querySelectorAll('.progress-fill');
+                    progressFills.forEach(fill => {
+                        fill.style.width = fill.style.width || '0%';
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.skills-grid').forEach(el => {
+            progressObserver.observe(el);
+        });
+
+        // Dynamic navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(0, 0, 0, 0.95)';
+            } else {
+                nav.style.background = 'rgba(0, 0, 0, 0.9)';
+            }
+        });
+
+        // Form submission handler
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+
+            // Simulate form submission
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                submitBtn.textContent = 'Message Sent!';
+                submitBtn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.background = 'var(--accent-gradient)';
+                    this.reset();
+                }, 2000);
+            }, 1000);
+        });
+
+        // Typing effect for hero subtitle
+        const subtitle = document.querySelector('.hero .subtitle');
+        const text = subtitle.textContent;
+        subtitle.textContent = '';
+
+        let i = 0;
+        const typeWriter = () => {
+            if (i < text.length) {
+                subtitle.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        };
+
+        setTimeout(typeWriter, 1000);
+
+        
+
+        // Interactive card hover effects
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Skill item click interaction
+        document.querySelectorAll('.skill-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+        // Collapsible Experience Section
+document.querySelectorAll('.experience-header').forEach(header => {
+    header.addEventListener('click', function() {
+        const experienceItem = this.closest('.experience-item'); // Get the parent container (.card .experience-item)
+        experienceItem.classList.toggle('active'); // Toggle the 'active' class on that parent
+    });
+});
+    </script>
+</body>
+</html>
